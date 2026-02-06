@@ -75,8 +75,10 @@ public class PdfService {
 
 // ---------------------------------// FOLHA DE ROSTO ------------------------------------------------------------
             document.newPage();
+
             document.add(nome);
             document.add(titulo);
+
             Paragraph paragraph =  new Paragraph(String.format("%s para obtenção do título de %s em %s apresentado à %s ",
                     pdfModel.getTipoTrabalho(),
                     pdfModel.getObjetivo(),
@@ -84,6 +86,7 @@ public class PdfService {
                     pdfModel.getInstituicao()), fontNormal);
             paragraph.setAlignment(Paragraph.ALIGN_RIGHT);
             paragraph.setSpacingBefore(50f);
+
             document.add(paragraph);
 
             Paragraph orientador = new Paragraph("Orientador:" + pdfModel.getOrientador(), fontNormal);
@@ -103,26 +106,28 @@ public class PdfService {
 
 
             // ---------------------------------// DEDICATÓRIA ------------------------------------------------------------
-
             document.newPage();
+
             Paragraph dedicatoria = new Paragraph(pdfModel.getDedicatoria(), fontNormal);
             dedicatoria.setAlignment(Paragraph.ALIGN_RIGHT);
             dedicatoria.setSpacingBefore(50f);
+
             document.add(dedicatoria);
             // ---------------------------------// AGRADECIMENTOS ------------------------------------------------------------
-
             document.newPage();
+
             Paragraph titulo3 = new Paragraph("AGRADECIMENTOS", fontBold);
             titulo3.setAlignment(Paragraph.ALIGN_CENTER);
             Paragraph agradecimentos = new  Paragraph(pdfModel.getAgradecimentos(), fontNormal);
             agradecimentos.setAlignment(Paragraph.ALIGN_CENTER);
             agradecimentos.setSpacingBefore(50f);
+
             document.add(titulo3);
             document.add(agradecimentos);
 
             // ---------------------------------// Epígrafe ------------------------------------------------------------
-
             document.newPage();
+
             Paragraph epigrafe = new Paragraph(pdfModel.getEpigrafe(), fontItalic);
             epigrafe.setAlignment(Paragraph.ALIGN_RIGHT);
             epigrafe.setSpacingBefore(140f);
@@ -130,24 +135,22 @@ public class PdfService {
 
 
             // ---------------------------------// RESUMO ------------------------------------------------------------
-
             document.newPage();
             Paragraph titulo4 = new Paragraph("RESUMO", fontBold);
             titulo4.setAlignment(Paragraph.ALIGN_CENTER);
             Paragraph resumo = new  Paragraph(pdfModel.getResumo(), fontNormal);
             resumo.setAlignment(Paragraph.ALIGN_CENTER);
             resumo.setSpacingBefore(50f);
-            Paragraph palavrasChave = new Paragraph("Palavras-chave:" + pdfModel.getPalavrasChave().replace(",", "."), fontNormal);
-            palavrasChave.setAlignment(Paragraph.ALIGN_CENTER);
-            palavrasChave.setSpacingBefore(10f);
 
             document.add(titulo4);
             document.add(resumo);
-            document.add(palavrasChave);
 
+            canvas.setFontAndSize(BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED), 12);
+            canvas.showTextAligned(PdfContentByte.ALIGN_CENTER,
+                    "Palavras-chave:" + pdfModel.getKeywords().replace(",", "."),
+                    Centro, PosicaoCidade,0);
 
             // ---------------------------------// ABSTRACT ------------------------------------------------------------
-
             document.newPage();
 
             Paragraph titulo5 = new Paragraph("ABSTRACT", fontBold);
@@ -155,13 +158,14 @@ public class PdfService {
             Paragraph resumoEn = new  Paragraph(pdfModel.getResumoEn(), fontNormal);
             resumo.setAlignment(Paragraph.ALIGN_CENTER);
             resumo.setSpacingBefore(50f);
-            Paragraph keywords = new Paragraph("Keywords:" + pdfModel.getKeywords().replace(",", "."), fontNormal);
-            palavrasChave.setAlignment(Paragraph.ALIGN_CENTER);
-            palavrasChave.setSpacingBefore(10f);
-
             document.add(titulo5);
             document.add(resumoEn);
-            document.add(keywords);
+
+            canvas.setFontAndSize(BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED), 12);
+            canvas.showTextAligned(PdfContentByte.ALIGN_CENTER,
+                    "Keywords:" + pdfModel.getKeywords().replace(",", "."),
+                    Centro, PosicaoCidade,0);
+
 
             document.close();
             return outputStream.toByteArray();

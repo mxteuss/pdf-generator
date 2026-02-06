@@ -1,17 +1,18 @@
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: #f1f5f9;
-
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-y: auto; /* permite scroll vertical */
+  overflow-x: hidden; /* esconde scroll horizontal */
+  background: rgb(255, 255, 255);
 }
 
 body.red-bg {
   background-color: black !important;
 }
 
-/* From Uiverse.io by kyle1dev */ 
+/* From Uiverse.io by kyle1dev */
 .modern-form {
   --primary: #3b82f6;
   --primary-dark: #2563eb;
@@ -20,19 +21,43 @@ body.red-bg {
   --text-main: #1e293b;
   --text-secondary: #64748b;
   --bg-input: #f8fafc;
-  position: relative;
-  width: 300px;
+
+  width: 500px;
   padding: 24px;
   background: #ffffff;
   border-radius: 16px;
   box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.05),
-    inset 0 0 0 1px rgba(148, 163, 184, 0.1);
+    rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
   font-family:
     system-ui,
     -apple-system,
     sans-serif;
+}
+
+.form-body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Campos que ocupam linha inteira */
+.input-group:has(textarea) {
+  grid-column: 1 / -1;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .form-body {
+    grid-template-columns: 1fr;
+  }
+
+  .input-group:has(textarea) {
+    grid-column: 1;
+  }
 }
 
 .form-title {
@@ -40,8 +65,19 @@ body.red-bg {
   font-weight: 600;
   color: var(--text-main);
   margin: 0 0 24px;
-  text-align: center;
+  text-align: left;
   letter-spacing: -0.01em;
+}
+
+.form-title::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 4px;
+  margin-top: 8px;
+  background: var(--primary);
+  border-radius: 2px;
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
 
 .input-group {
@@ -79,22 +115,16 @@ body.red-bg {
   pointer-events: none;
 }
 
-.password-toggle {
-  position: absolute;
-  right: 12px;
-  display: flex;
-  align-items: center;
-  padding: 4px;
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.2s ease;
+.field-hint {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
 }
 
-.eye-icon {
-  width: 16px;
-  height: 16px;
+.input-group.full-width {
+  grid-column: 1 / -1; /* ocupa linha inteira */
 }
 
 .submit-button {
@@ -102,7 +132,7 @@ body.red-bg {
   width: 100%;
   height: 40px;
   margin-top: 8px;
-  background: var(--primary);
+  background: linear-gradient(135deg, #71b7e6, #9b59b6);
   color: white;
   border: none;
   border-radius: 10px;
@@ -116,12 +146,7 @@ body.red-bg {
 .button-glow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(135deg, #9b59b6, #71b7e6);
   transform: translateX(-100%);
   transition: transform 0.5s ease;
 }
